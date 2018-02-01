@@ -5,18 +5,18 @@ package tree
 // 若它的右子树不空，则右子树上所有节点的值均大于它的根节点的值
 // 它的左右子树也分别为二叉排序树
 type BSTree struct {
-	Root *TreeNode
+	Root *BSTreeNode
 }
 
-type TreeNode struct {
+type BSTreeNode struct {
 	Value  int
-	Left   *TreeNode
-	Right  *TreeNode
-	Parent *TreeNode
+	Left   *BSTreeNode
+	Right  *BSTreeNode
+	Parent *BSTreeNode
 }
 
 // 查找节点
-func (tree *BSTree) Contains(v int) *TreeNode {
+func (tree *BSTree) Contains(v int) *BSTreeNode {
 	node := tree.Root
 	for {
 		if node == nil {
@@ -34,24 +34,24 @@ func (tree *BSTree) Contains(v int) *TreeNode {
 // 插入节点
 func (tree *BSTree) Insert(v int) {
 	if tree.Root == nil {
-		tree.Root = &TreeNode{v, nil, nil, nil}
+		tree.Root = &BSTreeNode{v, nil, nil, nil}
 		return
 	}
 	tree.Root.insert(v)
 }
 
-func (node *TreeNode) insert(v int) {
+func (node *BSTreeNode) insert(v int) {
 	if v < node.Value {
 		if node.Left != nil {
 			node.Left.insert(v)
 		} else {
-			node.Left = &TreeNode{v, nil, nil, node}
+			node.Left = &BSTreeNode{v, nil, nil, node}
 		}
 	} else {
 		if node.Right != nil {
 			node.Right.insert(v)
 		} else {
-			node.Right = &TreeNode{v, nil, nil, node}
+			node.Right = &BSTreeNode{v, nil, nil, node}
 		}
 	}
 }
@@ -63,7 +63,7 @@ func (tree *BSTree) InOrder() []int {
 	return order
 }
 
-func (node *TreeNode) inOrder(order *[]int) {
+func (node *BSTreeNode) inOrder(order *[]int) {
 	if node == nil {
 		return
 	}
@@ -106,14 +106,14 @@ func (tree *BSTree) Max() int {
 // 若删除节点既有左子树又有右子树，就用删除节点的左子树的最大节点取代删除节点
 func (tree *BSTree) Remove(v int) {
 	if tree.Root == nil {
-		panic("Can't remove node from an empty tree.")
+		return
 	}
 	node := tree.Contains(v)
 	if node == nil {
 		return
 	}
 
-	removeNode := func(node *TreeNode) {
+	removeNode := func(node *BSTreeNode) {
 		// 左右子树都为空
 		if node.Left == nil && node.Right == nil {
 			if node.Parent.Right == node {
