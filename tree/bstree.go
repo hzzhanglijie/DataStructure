@@ -1,8 +1,4 @@
-package main
-
-import (
-	"fmt"
-)
+package tree
 
 // 二叉排序树（Binary Sort Tree）
 // 若它的左子树不空，则左子树上所有节点的值均小于它的根节点的值
@@ -177,19 +173,5 @@ func (tree *BSTree) Remove(v int) {
 	}
 
 	removeNode(node)
-
-}
-
-func main() {
-	bst := &BSTree{}
-	bst.Insert(10)
-	bst.Insert(5)
-	bst.Insert(12)
-	bst.Insert(3)
-	bst.Insert(6)
-
-	bst.Remove(5)
-
-	fmt.Printf("%v \n", bst.InOrder())
 
 }
